@@ -38,15 +38,18 @@ describe("Pokemon Trainer", () => {
             const rattata = new Pokemon("Rattata", 24, 7, "Rattata!", "Bite")
 
             testTrainer.catchPokemon(rattata);
+            console.log(testTrainer)
 
-            expect(testTrainer.currentPokemon).toEqual({ "Rattata": {
-                name: 'Rattata',
-                health: 24,
-                attackDamage: 7,
-                sound: 'Rattata!',
-                move: 'Bite',
-                type: 'Normal'
-              }});
+            expect(testTrainer.currentPokemon).toEqual({
+                "Rattata": {
+                    name: 'Rattata',
+                    health: 24,
+                    attackDamage: 7,
+                    sound: 'Rattata!',
+                    move: 'Bite',
+                    type: 'Normal'
+                }
+            });
             expect(testTrainer.filledPokeballs).toBe(1);
         })
     })
