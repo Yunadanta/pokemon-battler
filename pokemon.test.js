@@ -1,5 +1,5 @@
 const pokemon = require("./pokemon");
-const {Pokemon} = require("./pokemon");
+const { Pokemon } = require("./pokemon");
 
 describe("Pokemon", () => {
     describe("Testing the new instance", () => {
@@ -11,11 +11,11 @@ describe("Pokemon", () => {
 
         test("Check the instance's properties", () => {
             const expectedOutcome = [
-                "name", 
-                "health", 
-                "attackDamage", 
-                "sound", 
-                "move", 
+                "name",
+                "health",
+                "attackDamage",
+                "sound",
+                "move",
                 "type",
             ]
 
@@ -99,3 +99,4 @@ describe("Pokemon", () => {
         })
     })
 })
+
