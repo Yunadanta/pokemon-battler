@@ -1,4 +1,5 @@
 const { Trainer } = require("./pokemon-trainer")
+const { Pokemon } = require("./pokemon")
 
 describe("Pokemon Trainer", () => {
     describe("Testing the instance and its properties and values", () => {
@@ -16,9 +17,9 @@ describe("Pokemon Trainer", () => {
             expect(Object.keys(testTrainer)).toEqual(expectedOutput)
         })
         test("Check initial values of Trainer", () => {
-            const testTrainer = new Trainer
+            const testTrainer = new Trainer("Red")
             const expectedOutput = [
-                "",
+                "Red",
                 {},
                 0,
                 6
@@ -26,16 +27,26 @@ describe("Pokemon Trainer", () => {
             expect(Object.values(testTrainer)).toEqual(expectedOutput)
         })
         test("Check 2 new trainers are not the same", () => {
-            const testTrainer = new Trainer
-            const secondTestTrainer = new Trainer
-            expect(testTrainer).not.toBe(secondTestTrainer)
+            const redTrainer = new Trainer("Red")
+            const blueTrainer = new Trainer("Blue")
+            expect(redTrainer).not.toBe(blueTrainer)
         })
     })
     describe("Checking the new methods for Trainer", () => {
         test("catchPokemon", () => {
-            const testTrainer = new Trainer
-            testTrainer.catchPokemon("Pikachu")
-            expect(testTrainer.currentPokemon).toEqual({ 1: "Pikachu" });
+            const testTrainer = new Trainer("Red")
+            const rattata = new Pokemon("Rattata", 24, 7, "Rattata!", "Bite")
+
+            testTrainer.catchPokemon(rattata);
+
+            expect(testTrainer.currentPokemon).toEqual({ "Rattata": {
+                name: 'Rattata',
+                health: 24,
+                attackDamage: 7,
+                sound: 'Rattata!',
+                move: 'Bite',
+                type: 'Normal'
+              }});
             expect(testTrainer.filledPokeballs).toBe(1);
         })
     })
