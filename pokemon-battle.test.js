@@ -252,7 +252,53 @@ describe("Testing the methods", () => {
             expect(testingBattle.fight()).toBe("Zigzagoon attacked with Tackle! It did 6 damage to Rattata! Rattata has 18 hp remaining!")
         })
 
-        // Add win condition to attacking statements rather than checking after first calling.
+        test("When fight method is called, if first pokemon attacks and second pokemon's health drops to 0 or lower, return a message saying first pokemon won.", () => {
+            const redTrainer = new Trainer("Red");
+            const blueTrainer = new Trainer("Blue");
+            const rattata = new Pokemon("Rattata", 24, 7, "Rattata!", "Bite")
+            const zigzagoon = new Pokemon("Zigzagoon", 28, 6, "Zigzagoon!", "Tackle")
+            redTrainer.catchPokemon(rattata);
+            blueTrainer.catchPokemon(zigzagoon);
+
+            const testingBattle = new Battle(redTrainer, blueTrainer)
+            const redPokemon = redTrainer.currentPokemon.Rattata
+            const bluePokemon = blueTrainer.currentPokemon.Zigzagoon
+            testingBattle.firstAttacker = redPokemon
+            testingBattle.secondAttacker = bluePokemon
+
+            testingBattle.fight();
+            testingBattle.fight();
+            testingBattle.fight();
+            testingBattle.fight();
+            testingBattle.fight();
+            testingBattle.fight();
+            expect(testingBattle.fight()).toBe("Red's Rattata wins!");
+        })
+
+        test("When fight method is called, if first pokemon attacks and second pokemon's health drops to 0 or lower, return a message saying first pokemon won.", () => {
+            const redTrainer = new Trainer("Red");
+            const blueTrainer = new Trainer("Blue");
+            const rattata = new Pokemon("Rattata", 24, 5, "Rattata!", "Bite")
+            const zigzagoon = new Pokemon("Zigzagoon", 28, 7, "Zigzagoon!", "Tackle")
+            redTrainer.catchPokemon(rattata);
+            blueTrainer.catchPokemon(zigzagoon);
+
+            const testingBattle = new Battle(redTrainer, blueTrainer)
+            const redPokemon = redTrainer.currentPokemon.Rattata
+            console.log(redPokemon);
+            const bluePokemon = blueTrainer.currentPokemon.Zigzagoon
+            testingBattle.firstAttacker = redPokemon
+            testingBattle.secondAttacker = bluePokemon
+
+            testingBattle.fight();
+            testingBattle.fight();
+            testingBattle.fight();
+            testingBattle.fight();
+            testingBattle.fight();
+            testingBattle.fight();
+            testingBattle.fight();
+            expect(testingBattle.fight()).toBe("Blue's Zigzagoon wins!");
+        })
     })
 })
 
