@@ -42,12 +42,12 @@ class Battle extends BattleArena {
         if (this.roundCounter % 2 === 0) {
             this.firstAttacker.health -= this.secondAttacker.attackDamage
             this.roundCounter++
-            return `${this.secondAttacker.name} attacked with ${this.secondAttacker.move}, and did ${this.secondAttacker.attackDamage} damage to ${this.firstAttacker.name}`
+            return `${this.secondAttacker.name} attacked with ${this.secondAttacker.move}! It did ${this.secondAttacker.attackDamage} damage to ${this.firstAttacker.name}! ${this.firstAttacker.name} has ${this.firstAttacker.health} hp remaining!`
         }
 
         this.secondAttacker.health -= this.firstAttacker.attackDamage
         this.roundCounter++
-        return `${this.firstAttacker.name} attacked ${this.firstAttacker.move}, and did ${this.firstAttacker.attackDamage} damage to ${this.secondAttacker.name}`
+        return `${this.firstAttacker.name} attacked with ${this.firstAttacker.move}! It did ${this.firstAttacker.attackDamage} damage to ${this.secondAttacker.name}! ${this.secondAttacker.name} has ${this.secondAttacker.health} hp remaining!`
     }
 
 }

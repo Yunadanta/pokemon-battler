@@ -4,21 +4,7 @@ const { Trainer } = require("./pokemon-trainer");
 const { BattleArena, Battle } = require("./pokemon-battle");
 const pokemon = require("./pokemon");
 
-// const redTrainer = new Trainer("Red");
-// const blueTrainer = new Trainer("Blue");
-
-// const rattata = new Pokemon("Rattata", 24, 7, "Rattata!", "Bite")
-// const zigzagoon = new Pokemon("Zigzagoon", 28, 6, "Zigzagoon!", "Tackle")
-// const bulbasaur = new Pokemon("Bulbasaur", 36, 6, "Bulbasaur!", "Vine Whip", "Grass");
-// const charmander = new Pokemon("Charmander", 24, 12, "Charmander!", "Ember", "Fire");
-// const squirtle = new Pokemon("Squirtle", 40, 5, "Squirtle!", "Bubble", "Water");
-
-// redTrainer.catchPokemon(rattata);
-// blueTrainer.catchPokemon(zigzagoon);
-
-// const testBattle = new BattleArena(redTrainer, blueTrainer)
-
-describe("Checking trainer's name and pokemon", () => {
+describe("Checking properties of created instances", () => {
     describe("Red Trainer", () => {
         test("Check first trainer's name is Red", () => {
             const redTrainer = new Trainer("Red");
@@ -78,8 +64,9 @@ describe("Checking trainer's name and pokemon", () => {
             expect(blueTrainer.filledPokeballs).toBe(1);
         })
     })
+})
 
-
+describe("Testing the methods", () => {
     describe("Testing battle arena", () => {
         test("Check the battle arena has two trainers", () => {
             const firstBattle = new BattleArena("Peter", "Alice")
@@ -150,13 +137,9 @@ describe("Checking trainer's name and pokemon", () => {
             expect(testingBattle.firstAttacker).not.toBe(null)
             expect(testingBattle.secondAttacker).not.toBe(null)
         })
-
-
-        // We need to write some tests to check the battle health and attackdamage values are changed accordingly (fight method)
-        // Also to check statement issued at end of each round
     })
 
-    describe("Fight", () => {
+    describe("Fight Method. Due to the random nature of finding out who attacks first and second using the whoFightsFirst method, we have just defined who is first and second explicitly for these tests.", () => {
         test("Every time the fight method is called the round counter increases by 1", () => {
             const redTrainer = new Trainer("Red");
             const blueTrainer = new Trainer("Blue");
@@ -166,9 +149,10 @@ describe("Checking trainer's name and pokemon", () => {
             blueTrainer.catchPokemon(zigzagoon);
 
             const testingBattle = new Battle(redTrainer, blueTrainer)
-            const redPokemon = redTrainer.currentPokemon.Rattata.name
-            const bluePokemon = blueTrainer.currentPokemon.Zigzagoon.name
-            testingBattle.whoFightsFirst(redPokemon, bluePokemon)
+            const redPokemon = redTrainer.currentPokemon.Rattata
+            const bluePokemon = blueTrainer.currentPokemon.Zigzagoon
+            testingBattle.firstAttacker = redPokemon
+            testingBattle.secondAttacker = bluePokemon
 
             expect(testingBattle.roundCounter).toBe(1)
             testingBattle.fight()
@@ -195,6 +179,7 @@ describe("Checking trainer's name and pokemon", () => {
             testingBattle.fight()
             expect(testingBattle.secondAttacker.health).toBe(21)
         })
+
         test("When fight method is called and the round number is even,secondAttacker attacks and firstAttacker's health goes down", () => {
             const redTrainer = new Trainer("Red");
             const blueTrainer = new Trainer("Blue");
@@ -215,6 +200,72 @@ describe("Checking trainer's name and pokemon", () => {
             expect(testingBattle.firstAttacker.health).toBe(18)
         })
 
+        test("When fight method is called, returns a string", () => {
+            const redTrainer = new Trainer("Red");
+            const blueTrainer = new Trainer("Blue");
+            const rattata = new Pokemon("Rattata", 24, 7, "Rattata!", "Bite")
+            const zigzagoon = new Pokemon("Zigzagoon", 28, 6, "Zigzagoon!", "Tackle")
+            redTrainer.catchPokemon(rattata);
+            blueTrainer.catchPokemon(zigzagoon);
 
+            const testingBattle = new Battle(redTrainer, blueTrainer)
+            const redPokemon = redTrainer.currentPokemon.Rattata
+            const bluePokemon = blueTrainer.currentPokemon.Zigzagoon
+            testingBattle.firstAttacker = redPokemon
+            testingBattle.secondAttacker = bluePokemon
+
+            expect(typeof testingBattle.fight()).toBe("string")
+        })
+
+        test("When fight method is called, it is the first round, and the both pokemon's health is above 0, returns a string saying the first pokemon attacked with its move, the damage it did, and the second pokemon's remaining health.", () => {
+            const redTrainer = new Trainer("Red");
+            const blueTrainer = new Trainer("Blue");
+            const rattata = new Pokemon("Rattata", 24, 7, "Rattata!", "Bite")
+            const zigzagoon = new Pokemon("Zigzagoon", 28, 6, "Zigzagoon!", "Tackle")
+            redTrainer.catchPokemon(rattata);
+            blueTrainer.catchPokemon(zigzagoon);
+
+            const testingBattle = new Battle(redTrainer, blueTrainer)
+            const redPokemon = redTrainer.currentPokemon.Rattata
+            const bluePokemon = blueTrainer.currentPokemon.Zigzagoon
+            testingBattle.firstAttacker = redPokemon
+            testingBattle.secondAttacker = bluePokemon
+
+            expect(testingBattle.fight()).toBe("Rattata attacked with Bite! It did 7 damage to Zigzagoon! Zigzagoon has 21 hp remaining!")
+        })
+
+        test("When fight method is called, it is the second round, and the both pokemon's health is above 0, returns a string saying the second pokemon attacked with its move, the damage it did, and the first pokemon's remaining health.", () => {
+            const redTrainer = new Trainer("Red");
+            const blueTrainer = new Trainer("Blue");
+            const rattata = new Pokemon("Rattata", 24, 7, "Rattata!", "Bite")
+            const zigzagoon = new Pokemon("Zigzagoon", 28, 6, "Zigzagoon!", "Tackle")
+            redTrainer.catchPokemon(rattata);
+            blueTrainer.catchPokemon(zigzagoon);
+
+            const testingBattle = new Battle(redTrainer, blueTrainer)
+            const redPokemon = redTrainer.currentPokemon.Rattata
+            const bluePokemon = blueTrainer.currentPokemon.Zigzagoon
+            testingBattle.firstAttacker = redPokemon
+            testingBattle.secondAttacker = bluePokemon
+
+            testingBattle.fight();
+            expect(testingBattle.fight()).toBe("Zigzagoon attacked with Tackle! It did 6 damage to Rattata! Rattata has 18 hp remaining!")
+        })
+
+        // Add win condition to attacking statements rather than checking after first calling.
     })
 })
+
+// const redTrainer = new Trainer("Red");
+// const blueTrainer = new Trainer("Blue");
+
+// const rattata = new Pokemon("Rattata", 24, 7, "Rattata!", "Bite")
+// const zigzagoon = new Pokemon("Zigzagoon", 28, 6, "Zigzagoon!", "Tackle")
+// const bulbasaur = new Pokemon("Bulbasaur", 36, 6, "Bulbasaur!", "Vine Whip", "Grass");
+// const charmander = new Pokemon("Charmander", 24, 12, "Charmander!", "Ember", "Fire");
+// const squirtle = new Pokemon("Squirtle", 40, 5, "Squirtle!", "Bubble", "Water");
+
+// redTrainer.catchPokemon(rattata);
+// blueTrainer.catchPokemon(zigzagoon);
+
+// const testBattle = new BattleArena(redTrainer, blueTrainer)
