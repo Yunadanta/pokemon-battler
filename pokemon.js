@@ -9,13 +9,15 @@ class Pokemon {
         this.type = pokemonType;
     }
 
-    strongAgainst(defendingType) {
-        if (this.type === "Normal") return "This pokemon is not strong against anything";
-        if (this.type === "Grass") return "This pokemon is strong against Water types";
-        if (this.type === "Fire") return "This pokemon is strong against Grass types";
-        if (this.type === "Water") return "This pokemon is strong against Fire types";
+    // strongAgainst(defendingType) {
+    //     if (this.type === "Normal") return "This pokemon is not strong against anything";
+    //     if (this.type === "Grass") return "This pokemon is strong against Water types";
+    //     if (this.type === "Fire") return "This pokemon is strong against Grass types";
+    //     if (this.type === "Water") return "This pokemon is strong against Fire types";
 
-    // return strength[this.type] === defendingType
+
+
+    strongAgainst(defendingType) {
 
         const strength = {
             Normal: "nothing",
@@ -35,15 +37,18 @@ class Pokemon {
             Ghost: "Fighting",
             Steel: "Rock",
             Dark: "Psychic",
-            Fairy: "Dark",  
+            Fairy: "Dark",
         }
+        return strength[this.type] === defendingType;
     }
 
-    weakAgainst() {
-        if (this.type === "Normal") return "This pokemon is not weak against anything";
-        if (this.type === "Grass") return "This pokemon is weak against Fire types";
-        if (this.type === "Fire") return "This pokemon is weak against Water types";
-        if (this.type === "Water") return "This pokemon is weak against Grass types";
+    // weakAgainst() {
+    //     if (this.type === "Normal") return "This pokemon is not weak against anything";
+    //     if (this.type === "Grass") return "This pokemon is weak against Fire types";
+    //     if (this.type === "Fire") return "This pokemon is weak against Water types";
+    //     if (this.type === "Water") return "This pokemon is weak against Grass types";
+
+    weakAgainst(defendingType) {
 
         const weakness = {
             Normal: "Fighting",
@@ -63,8 +68,9 @@ class Pokemon {
             Ghost: "Psychic",
             Steel: "Fire",
             Dark: "Fairy",
-            Fairy: "Dragon",  
+            Fairy: "Dragon",
         }
+        return weakness[this.type] === defendingType;
     }
 
     soundMade() {

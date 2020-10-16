@@ -285,7 +285,6 @@ describe("Testing the methods", () => {
 
             const testingBattle = new Battle(redTrainer, blueTrainer)
             const redPokemon = redTrainer.currentPokemon.Rattata
-            console.log(redPokemon);
             const bluePokemon = blueTrainer.currentPokemon.Zigzagoon
             testingBattle.firstAttacker = redPokemon
             testingBattle.secondAttacker = bluePokemon
@@ -299,8 +298,214 @@ describe("Testing the methods", () => {
             testingBattle.fight();
             expect(testingBattle.fight()).toBe("Blue's Zigzagoon wins!");
         })
+        describe("Testing Strengths and Weaknesses", () => {
+            test("If attacking pokemon is strong against defending pokemon returns a string", () => {
+                const redTrainer = new Trainer("Red");
+                const blueTrainer = new Trainer("Blue");
+                const charmander = new Pokemon("Charmander", 24, 12, "Charmander!", "Ember", "Fire");
+                const bulbasaur = new Pokemon("Bulbasaur", 36, 6, "Bulbasaur!", "Vine Whip", "Grass");
+                redTrainer.catchPokemon(charmander);
+                blueTrainer.catchPokemon(bulbasaur);
+
+                const testingBattle = new Battle(redTrainer, blueTrainer)
+                const redPokemon = redTrainer.currentPokemon.Charmander
+                const bluePokemon = blueTrainer.currentPokemon.Bulbasaur
+                testingBattle.firstAttacker = redPokemon
+                testingBattle.secondAttacker = bluePokemon
+                expect(typeof testingBattle.fight()).toBe("string");
+
+            })
+            test("If attacking pokemon is strong against defending pokemon in an odd numbered round returns a super effective damage message", () => {
+                const redTrainer = new Trainer("Red");
+                const blueTrainer = new Trainer("Blue");
+                const charmander = new Pokemon("Charmander", 24, 12, "Charmander!", "Ember", "Fire");
+                const bulbasaur = new Pokemon("Bulbasaur", 36, 6, "Bulbasaur!", "Vine Whip", "Grass");
+                redTrainer.catchPokemon(charmander);
+                blueTrainer.catchPokemon(bulbasaur);
+
+                const testingBattle = new Battle(redTrainer, blueTrainer)
+                const redPokemon = redTrainer.currentPokemon.Charmander
+                const bluePokemon = blueTrainer.currentPokemon.Bulbasaur
+                testingBattle.firstAttacker = redPokemon
+                testingBattle.secondAttacker = bluePokemon
+                expect(testingBattle.fight()).toBe("Charmander attacked with Ember! It did a boosted 15 damage to Bulbasaur! It's super effective! Bulbasaur has 21 hp remaining!");
+            })
+            test("If attacking pokemon is strong against defending pokemon in an even numbered round returns a super effective damage message", () => {
+                const redTrainer = new Trainer("Red");
+                const blueTrainer = new Trainer("Blue");
+                const squirtle = new Pokemon("Squirtle", 40, 5, "Squirtle!", "Bubble", "Water");
+                const bulbasaur = new Pokemon("Bulbasaur", 36, 6, "Bulbasaur!", "Vine Whip", "Grass");
+                redTrainer.catchPokemon(squirtle);
+                blueTrainer.catchPokemon(bulbasaur);
+
+                const testingBattle = new Battle(redTrainer, blueTrainer)
+                const redPokemon = redTrainer.currentPokemon.Squirtle
+                const bluePokemon = blueTrainer.currentPokemon.Bulbasaur
+                testingBattle.firstAttacker = redPokemon
+                testingBattle.secondAttacker = bluePokemon
+                testingBattle.fight()
+                expect(testingBattle.fight()).toBe("Bulbasaur attacked with Vine Whip! It did a boosted 8 damage to Squirtle! It's super effective! Squirtle has 32 hp remaining!");
+            })
+
+            test("If attacking pokemon is weak against defending pokemon returns a string", () => {
+                const redTrainer = new Trainer("Red");
+                const blueTrainer = new Trainer("Blue");
+                const charmander = new Pokemon("Charmander", 24, 12, "Charmander!", "Ember", "Fire");
+                const bulbasaur = new Pokemon("Bulbasaur", 36, 6, "Bulbasaur!", "Vine Whip", "Grass");
+                redTrainer.catchPokemon(bulbasaur);
+                blueTrainer.catchPokemon(charmander);
+
+                const testingBattle = new Battle(redTrainer, blueTrainer)
+                const redPokemon = redTrainer.currentPokemon.Bulbasaur
+                const bluePokemon = blueTrainer.currentPokemon.Charmander
+                testingBattle.firstAttacker = redPokemon
+                testingBattle.secondAttacker = bluePokemon
+                expect(typeof testingBattle.fight()).toBe("string");
+
+            })
+            test("If attacking pokemon is weak against defending pokemon in an odd numbered round returns the not very effective message", () => {
+                const redTrainer = new Trainer("Red");
+                const blueTrainer = new Trainer("Blue");
+                const charmander = new Pokemon("Charmander", 24, 12, "Charmander!", "Ember", "Fire");
+                const bulbasaur = new Pokemon("Bulbasaur", 36, 6, "Bulbasaur!", "Vine Whip", "Grass");
+                redTrainer.catchPokemon(bulbasaur);
+                blueTrainer.catchPokemon(charmander);
+
+                const testingBattle = new Battle(redTrainer, blueTrainer)
+                const redPokemon = redTrainer.currentPokemon.Bulbasaur
+                const bluePokemon = blueTrainer.currentPokemon.Charmander
+                testingBattle.firstAttacker = redPokemon
+                testingBattle.secondAttacker = bluePokemon
+
+                expect(testingBattle.fight()).toBe("Bulbasaur attacked with Vine Whip! It did a reduced 4 damage to Charmander! It's not very effective! Charmander has 20 hp remaining!");
+
+            })
+            test("If attacking pokemon is weak against defending pokemon in an even numbered round returns the not very effective message", () => {
+                const redTrainer = new Trainer("Red");
+                const blueTrainer = new Trainer("Blue");
+                const charmander = new Pokemon("Charmander", 24, 12, "Charmander!", "Ember", "Fire");
+                const squirtle = new Pokemon("Squirtle", 40, 5, "Squirtle!", "Bubble", "Water");
+                redTrainer.catchPokemon(squirtle);
+                blueTrainer.catchPokemon(charmander);
+
+                const testingBattle = new Battle(redTrainer, blueTrainer)
+                const redPokemon = redTrainer.currentPokemon.Squirtle
+                const bluePokemon = blueTrainer.currentPokemon.Charmander
+                testingBattle.firstAttacker = redPokemon
+                testingBattle.secondAttacker = bluePokemon
+                testingBattle.fight()
+                expect(testingBattle.fight()).toBe("Charmander attacked with Ember! It did a reduced 9 damage to Squirtle! It's not very effective! Squirtle has 31 hp remaining!");
+
+            })
+
+            test("If attacking pokemon is strong against defending pokemon in an odd numbered round and wins, a super effective winning message shows", () => {
+                const redTrainer = new Trainer("Red");
+                const blueTrainer = new Trainer("Blue");
+                const charmander = new Pokemon("Charmander", 24, 12, "Charmander!", "Ember", "Fire");
+                const bulbasaur = new Pokemon("Bulbasaur", 36, 6, "Bulbasaur!", "Vine Whip", "Grass");
+                redTrainer.catchPokemon(charmander);
+                blueTrainer.catchPokemon(bulbasaur);
+
+                const testingBattle = new Battle(redTrainer, blueTrainer)
+                const redPokemon = redTrainer.currentPokemon.Charmander
+                const bluePokemon = blueTrainer.currentPokemon.Bulbasaur
+                testingBattle.firstAttacker = redPokemon
+                testingBattle.secondAttacker = bluePokemon
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                expect(testingBattle.fight()).toBe("The attack was super effective and Bulbasaur fainted. Red's Charmander wins!");
+            })
+            test("If attacking pokemon is strong against defending pokemon in an even numbered round and wins, a super effective winning message shows", () => {
+                const redTrainer = new Trainer("Red");
+                const blueTrainer = new Trainer("Blue");
+                const squirtle = new Pokemon("Squirtle", 40, 5, "Squirtle!", "Bubble", "Water");
+                const bulbasaur = new Pokemon("Bulbasaur", 36, 6, "Bulbasaur!", "Vine Whip", "Grass");
+                redTrainer.catchPokemon(squirtle);
+                blueTrainer.catchPokemon(bulbasaur);
+
+                const testingBattle = new Battle(redTrainer, blueTrainer)
+                const redPokemon = redTrainer.currentPokemon.Squirtle
+                const bluePokemon = blueTrainer.currentPokemon.Bulbasaur
+                testingBattle.firstAttacker = redPokemon
+                testingBattle.secondAttacker = bluePokemon
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                expect(testingBattle.fight()).toBe("The attack was super effective and Squirtle fainted. Blue's Bulbasaur wins!");
+            })
+
+            test("If attacking pokemon is weak against defending pokemon in an odd numbered round and wins, a not very effective winning message shows", () => {
+                const redTrainer = new Trainer("Red");
+                const blueTrainer = new Trainer("Blue");
+                const charmander = new Pokemon("Charmander", 24, 12, "Charmander!", "Ember", "Fire");
+                const bulbasaur = new Pokemon("Bulbasaur", 360, 6, "Bulbasaur!", "Vine Whip", "Grass");
+                redTrainer.catchPokemon(bulbasaur);
+                blueTrainer.catchPokemon(charmander);
+
+                const testingBattle = new Battle(redTrainer, blueTrainer)
+                const redPokemon = redTrainer.currentPokemon.Bulbasaur
+                const bluePokemon = blueTrainer.currentPokemon.Charmander
+                testingBattle.firstAttacker = redPokemon
+                testingBattle.secondAttacker = bluePokemon
+
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                expect(testingBattle.fight()).toBe("The attack was not very effective but Charmander fainted. Red's Bulbasaur wins!");
+            })
+
+            test("If attacking pokemon is weak against defending pokemon in an even numbered round returns the not very effective message", () => {
+                const redTrainer = new Trainer("Red");
+                const blueTrainer = new Trainer("Blue");
+                const charmander = new Pokemon("Charmander", 24, 12, "Charmander!", "Ember", "Fire");
+                const squirtle = new Pokemon("Squirtle", 40, 5, "Squirtle!", "Bubble", "Water");
+                redTrainer.catchPokemon(squirtle);
+                blueTrainer.catchPokemon(charmander);
+
+                const testingBattle = new Battle(redTrainer, blueTrainer)
+                const redPokemon = redTrainer.currentPokemon.Squirtle
+                const bluePokemon = blueTrainer.currentPokemon.Charmander
+                testingBattle.firstAttacker = redPokemon
+                testingBattle.secondAttacker = bluePokemon
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                testingBattle.fight()
+                expect(testingBattle.fight()).toBe("The attack was not very effective but Squirtle fainted. Blue's Charmander wins!");
+            })
+
+        })
     })
 })
+
+
+
+
+
+
+
+
+
 
 // const redTrainer = new Trainer("Red");
 // const blueTrainer = new Trainer("Blue");

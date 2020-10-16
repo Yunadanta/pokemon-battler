@@ -96,32 +96,58 @@ describe("Pokemon", () => {
     })
 
     describe("Testing the instance's methods", () => {
-        test("Check what pokemon is strong against", () => {
+        // test("Check what pokemon is strong against", () => {
+
+        //     const rattata = new Pokemon("Rattata", 24, 7, "Rattata!", "Bite");
+        //     const bulbasaur = new Pokemon("Bulbasaur", 36, 6, "Bulbasaur!", "Vine Whip", "Grass");
+        //     const charmander = new Pokemon("Charmander", 24, 12, "Charmander!", "Ember", "Fire");
+        //     const squirtle = new Pokemon("Squirtle", 40, 5, "Squirtle!", "Bubble", "Water");
+
+        //     expect(rattata.strongAgainst()).toBe("This pokemon is not strong against anything")
+        //     expect(bulbasaur.strongAgainst()).toBe("This pokemon is strong against Water types")
+        //     expect(charmander.strongAgainst()).toBe("This pokemon is strong against Grass types")
+        //     expect(squirtle.strongAgainst()).toBe("This pokemon is strong against Fire types")
+        // })
+
+        test("Check what pokemon is strong against - returning a boolean true if it is stronger, false if not", () => {
 
             const rattata = new Pokemon("Rattata", 24, 7, "Rattata!", "Bite");
             const bulbasaur = new Pokemon("Bulbasaur", 36, 6, "Bulbasaur!", "Vine Whip", "Grass");
             const charmander = new Pokemon("Charmander", 24, 12, "Charmander!", "Ember", "Fire");
             const squirtle = new Pokemon("Squirtle", 40, 5, "Squirtle!", "Bubble", "Water");
 
-            expect(rattata.strongAgainst()).toBe("This pokemon is not strong against anything")
-            expect(bulbasaur.strongAgainst()).toBe("This pokemon is strong against Water types")
-            expect(charmander.strongAgainst()).toBe("This pokemon is strong against Grass types")
-            expect(squirtle.strongAgainst()).toBe("This pokemon is strong against Fire types")
+            expect(rattata.strongAgainst(bulbasaur.type)).toBe(false)
+            expect(bulbasaur.strongAgainst(squirtle.type)).toBe(true)
+            expect(charmander.strongAgainst(bulbasaur.type)).toBe(true)
+            expect(squirtle.strongAgainst(rattata.type)).toBe(false)
         })
 
 
 
-        test("Check what pokemon is weak against", () => {
+        // test("Check what pokemon is weak against", () => {
+
+        //     const rattata = new Pokemon("Rattata", 24, 7, "Rattata!", "Bite");
+        //     const bulbasaur = new Pokemon("Bulbasaur", 36, 6, "Bulbasaur!", "Vine Whip", "Grass");
+        //     const charmander = new Pokemon("Charmander", 24, 12, "Charmander!", "Ember", "Fire");
+        //     const squirtle = new Pokemon("Squirtle", 40, 5, "Squirtle!", "Bubble", "Water");
+
+        //     expect(rattata.weakAgainst()).toBe("This pokemon is not weak against anything")
+        //     expect(bulbasaur.weakAgainst()).toBe("This pokemon is weak against Fire types")
+        //     expect(charmander.weakAgainst()).toBe("This pokemon is weak against Water types")
+        //     expect(squirtle.weakAgainst()).toBe("This pokemon is weak against Grass types")
+        // })
+
+        test("Check what pokemon is weak against - returning a boolean true if it is stronger, false if not", () => {
 
             const rattata = new Pokemon("Rattata", 24, 7, "Rattata!", "Bite");
             const bulbasaur = new Pokemon("Bulbasaur", 36, 6, "Bulbasaur!", "Vine Whip", "Grass");
             const charmander = new Pokemon("Charmander", 24, 12, "Charmander!", "Ember", "Fire");
             const squirtle = new Pokemon("Squirtle", 40, 5, "Squirtle!", "Bubble", "Water");
 
-            expect(rattata.weakAgainst()).toBe("This pokemon is not weak against anything")
-            expect(bulbasaur.weakAgainst()).toBe("This pokemon is weak against Fire types")
-            expect(charmander.weakAgainst()).toBe("This pokemon is weak against Water types")
-            expect(squirtle.weakAgainst()).toBe("This pokemon is weak against Grass types")
+            expect(rattata.weakAgainst("Fighting")).toBe(true)
+            expect(bulbasaur.weakAgainst(charmander.type)).toBe(true)
+            expect(charmander.weakAgainst(bulbasaur.type)).toBe(false)
+            expect(squirtle.weakAgainst(rattata.type)).toBe(false)
         })
 
 
